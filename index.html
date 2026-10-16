@@ -3,6 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0A0A0A">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png?v=2">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png?v=2">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="EGOX">
 <title>EGOX Локации 100k</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -193,6 +201,39 @@ details.box>summary::-webkit-details-marker{display:none}
 .sc .hv{font-size:15px;color:var(--fg)}
 .sc .fd{font-size:20px;font-weight:500;color:var(--warn)}
 .sc.done .fd{color:var(--ok);font-size:16px}
+.trow{align-items:start}
+.tmain{display:flex;flex-direction:column;gap:6px;min-width:0}
+.tbar{height:6px;border-radius:3px;background:var(--panel2);display:flex;overflow:hidden;margin-top:2px}
+.tbar i{display:block;height:100%}
+.tnums{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12px;color:var(--mut)}
+.tnums .g{color:var(--ok)}.tnums .o{color:var(--warn)}.tnums .w{color:var(--fg);font-weight:500}
+.need1{font-size:14px;color:var(--warn)}.need1 b{font-size:20px}
+.tabbar{display:none}
+.whoami{display:none;justify-content:space-between;align-items:center;gap:10px;font-size:13px;color:var(--mut);border-top:1px solid var(--line);padding-top:14px}
+@media (max-width:760px){
+  header nav{display:none}
+  .bar{flex-wrap:nowrap;gap:8px;padding-block:10px}
+  .logo{height:18px}
+  .me>span:first-child{display:none}
+  #meBox,#meLive{display:none!important}
+  .fblock .chips{flex-wrap:nowrap;overflow-x:auto;margin-inline:-16px;padding-inline:16px;scrollbar-width:none}
+  .fblock .chips::-webkit-scrollbar{display:none}
+  .chip{white-space:nowrap}
+  .whoami{display:flex!important}
+  .acts{margin-left:auto}
+  .acts .btn{padding:8px 10px;font-size:13px}
+  #addVisit{display:none}
+  .langs button{padding:6px 7px}
+  main{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
+  .tabbar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--bg);border-top:1px solid var(--line);
+    padding:6px max(8px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(8px,env(safe-area-inset-left,0px))}
+  .tabbar button{flex:1;background:none;border:0;color:var(--mut);display:flex;flex-direction:column;align-items:center;gap:3px;font:500 11px var(--f-ui);padding:6px 2px;border-radius:8px;position:relative;cursor:pointer}
+  .tabbar svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+  .tabbar button[aria-current="true"]{color:var(--fg)}
+  .tabbar button[aria-current="true"] svg{stroke-width:2.2}
+  .tabbar .cnt{position:absolute;top:2px;right:calc(50% - 22px);font-size:10px;padding:0 5px}
+  .toast{bottom:calc(84px + env(safe-area-inset-bottom,0px))}
+}
 .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(20px + env(safe-area-inset-bottom,0px));background:var(--fg);color:var(--bg);padding:10px 16px;border-radius:6px;font-weight:500;z-index:60}
 .proto{font-size:12px;color:var(--mut);border:1px dashed var(--line);padding:8px 12px;border-radius:6px}
 @media (max-width:760px){.hero,.two{grid-template-columns:1fr}.crow>summary{grid-template-columns:28px minmax(0,1fr) 84px 14px}.crow .mid{grid-column:2/4;grid-row:2}.grid2{grid-template-columns:1fr}.rules li{grid-template-columns:1fr}.bar{gap:10px}nav{order:3;flex-basis:100%}.big .v,.need .v{font-size:36px}}
@@ -212,11 +253,13 @@ details.box>summary::-webkit-details-marker{display:none}
       <button data-tab="rules">Правила <span class="cnt" id="badCnt" hidden></span></button>
       <button data-tab="log">История</button>
     </nav>
-    <label class="me" id="meBox"><span>Я</span><select id="me" aria-label="Кто работает"></select></label><span class="me" id="meLive" hidden><span id="meName"></span><button class="btn ghost sm" id="logout">Выйти</button></span><div class="langs" role="group" aria-label="Язык"><button data-lang="uz">UZ</button><button data-lang="ru">RU</button><button data-lang="en">EN</button></div><div class="acts"><button class="btn ghost" id="addVisit">+ Выезд</button><button class="btn" id="addLoc">+ Локация</button></div>
+    <label class="me" id="meBox"><span>Я</span><select id="me" aria-label="Кто работает"></select></label><span class="me" id="meLive" hidden><span id="meName"></span><button class="btn ghost sm" id="logout">Выйти</button></span><div class="langs" role="group" aria-label="Язык"><button data-lang="uz">UZ</button><button data-lang="ru">RU</button><button data-lang="en">EN</button></div><button class="btn ghost sm" id="installBtn" hidden>Установить</button><div class="acts"><button class="btn ghost" id="addVisit">+ Выезд</button><button class="btn" id="addLoc">+ Локация</button></div>
   </div>
 </header>
 <main class="wrap" id="app"></main>
 <div id="layer"></div>
+<nav class="tabbar" id="tabbar" aria-label="Разделы"><button data-tab="sum"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13h6V4H4zM14 20h6V11h-6zM4 20h6v-4H4zM14 7h6V4h-6z"/></svg><span>Сводка</span></button><button data-tab="locs"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><span>Локации</span></button><button data-tab="visits"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 3v4M16 3v4M4 10h16"/></svg><span>Выезды</span> <span class="cnt" id="lateCnt2" hidden></span></button><button data-tab="rules"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11l2 2 4-4"/><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/></svg><span>Правила</span> <span class="cnt" id="badCnt2" hidden></span></button><button data-tab="log"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg><span>История</span></button></nav>
+
 
 <script>
 /* ===================== НАСТРОЙКИ =====================
@@ -374,7 +417,7 @@ const I18N={
 'Или своими словами':['Yoki o‘z so‘zlaringiz bilan','Or in your own words'],'Записать отказ':['Rad etishni yozish','Record refusal'],
 'Завод':['Zavod','Factory'],'Рынок':['Bozor','Market'],'Ташкент':['Toshkent','Tashkent'],'Таш область':['Toshkent viloyati','Tashkent region'],'Самарканд':['Samarqand','Samarkand'],'Чирчик':['Chirchiq','Chirchik'],'Ургенч':['Urganch','Urgench'],'Навои':['Navoiy','Navoi'],'Бухара':['Buxoro','Bukhara'],'Фергана':['Farg‘ona','Fergana'],'Андижан':['Andijon','Andijan'],'Наманган':['Namangan','Namangan'],'Нукус':['Nukus','Nukus'],'Карши':['Qarshi','Karshi'],'Джизак':['Jizzax','Jizzakh'],
 'Амаль':['Amal','Amal'],'Тимур':['Timur','Timur'],'Ислам':['Islom','Islam'],'Рихси':['Rixsi','Rikhsi'],'только что':['hozirgina','just now'],
-'Вход':['Kirish','Sign in'],'Пароль':['Parol','Password'],'Нет доступа или забыл пароль — напиши Амалю.':['Kirish yo‘q yoki parolni unutdingiz — Amalga yozing.','No access or forgot password? Message Amal.'],'Неверная почта или пароль':['Pochta yoki parol noto‘g‘ri','Wrong email or password'],'Введи рабочую почту — пришлём код.':['Ish pochtangizni kiriting — kod yuboramiz.','Enter your work email — we will send a code.'],'Почта':['Pochta','Email'],'Получить код':['Kod olish','Get code'],'Код из письма':['Xatdagi kod','Code from the email'],'Войти':['Kirish','Sign in'],'Другая почта':['Boshqa pochta','Another email'],'Загружаю данные…':['Ma’lumotlar yuklanmoqda…','Loading…'],
+'Вход':['Kirish','Sign in'],'Вы вошли:':['Siz kirdingiz:','Signed in as:'],'Разделы':['Bo‘limlar','Sections'],'Каждый тип: сколько часов в плане, сколько уже закрыто договорами, сколько в переговорах и сколько ещё найти. Одна точка даёт до 50 / 100 / 1 000 ч по размеру.':['Har bir tur: rejada necha soat, shartnoma bilan qancha yopilgan, qanchasi muzokarada va yana qancha topish kerak. Bitta nuqta hajmiga qarab 50 / 100 / 1 000 soatgacha beradi.','Each type: planned hours, hours closed by agreements, hours in negotiation and hours still to find. One site gives up to 50 / 100 / 1,000 h depending on size.'],'План закрыт':['Reja yopildi','Plan closed'],'Хватает переговоров':['Muzokaralar yetarli','Covered by negotiations'],'Установить':['O‘rnatish','Install'],'Приложение установлено':['Ilova o‘rnatildi','App installed'],'Пароль':['Parol','Password'],'Нет доступа или забыл пароль — напиши Амалю.':['Kirish yo‘q yoki parolni unutdingiz — Amalga yozing.','No access or forgot password? Message Amal.'],'Неверная почта или пароль':['Pochta yoki parol noto‘g‘ri','Wrong email or password'],'Введи рабочую почту — пришлём код.':['Ish pochtangizni kiriting — kod yuboramiz.','Enter your work email — we will send a code.'],'Почта':['Pochta','Email'],'Получить код':['Kod olish','Get code'],'Код из письма':['Xatdagi kod','Code from the email'],'Войти':['Kirish','Sign in'],'Другая почта':['Boshqa pochta','Another email'],'Загружаю данные…':['Ma’lumotlar yuklanmoqda…','Loading…'],
 'Сохранено':['Saqlandi','Saved'],'Локация добавлена':['Joy qo‘shildi','Location added'],'Выезд запланирован':['Safar rejalashtirildi','Visit planned'],'Изменений нет':['O‘zgarish yo‘q','No changes'],
 'Демо-режим: ключи Supabase не указаны, данные хранятся только в этом браузере.':['Demo rejim: Supabase kalitlari kiritilmagan, ma’lumotlar faqat shu brauzerda.','Demo mode: no Supabase keys, data is stored only in this browser.'],
 'название':['nomi','name'],'тип':['tur','type'],'людей':['odam','people'],'регион':['hudud','region'],'ведёт':['olib boradi','owner'],'статус':['holat','status'],'контакт':['kontakt','contact'],'телефон':['telefon','phone'],'площадка':['maydon','site'],'проект':['loyiha','project'],'часы':['soat','hours'],'когда поеду':['qachon boraman','visit date'],
@@ -385,6 +428,9 @@ const RX=[
  [new RegExp('^('+N+') чел\\.$'),m=>[m[1]+' kishi',m[1]+' people']],
  [new RegExp('^('+N+') чел\\., по ('+N+') ч$'),m=>[m[1]+' kishi, '+m[2]+' soatdan',m[1]+' people, '+m[2]+' h each']],
  [new RegExp('^до ('+N+') чел\\., по ('+N+') ч$'),m=>[m[1]+' kishigacha, '+m[2]+' soatdan','under '+m[1]+' people, '+m[2]+' h each']],
+ [new RegExp('^План ('+N+') ч$'),m=>['Reja '+m[1]+' soat','Plan '+m[1]+' h']],
+ [new RegExp('^Найти ещё ('+N+') ч$'),m=>['Yana topish '+m[1]+' soat','Still to find '+m[1]+' h']],
+ [new RegExp('^1 точка — до ('+N+') ч$'),m=>['1 nuqta — '+m[1]+' soatgacha','1 site — up to '+m[1]+' h']],
  [new RegExp('^из ('+N+') ч закрыто$'),m=>[m[1]+' soatdan yopildi','of '+m[1]+' h closed']],
  [new RegExp('^из ('+N+') ч на улице$'),m=>[m[1]+' soatdan ko‘chada','of '+m[1]+' h outdoors']],
  [new RegExp('^В переговорах ('+N+') ч$'),m=>['Muzokarada '+m[1]+' soat','Negotiating '+m[1]+' h']],
@@ -494,9 +540,14 @@ function openCatDrawer(id){
   const C=compute(),c=C.cats.find(x=>x.id===id),s=split(c.ts);
   layer(`<div class="sechead"><div><div class="eyebrow">${c.id} · ${esc(c.en)}</div><h2>${esc(c.ru)}</h2></div><button class="btn ghost sm" data-close>Закрыть</button></div>
   <div class="sizes small3">${[['L','Крупных'],['M','Средних'],['S','Малых']].map(([k,n])=>`<div class="sz"><span class="eyebrow">${n}</span><span class="v num">${s[k]}</span></div>`).join('')}</div>
-  <p class="small mut">${fmt(c.closed)} из ${fmt(c.plan)} ч закрыто. Ниже — что искать по типам.</p>
-  <div class="list">${c.ts.map(t=>`<div class="item" style="cursor:default"><span><span class="t">${esc(t.ru)}</span><span class="meta"><span class="num">${t.id}</span><span>${esc(t.en)}</span>${t.out>=.5?'<span class="tag out">улица</span>':''}</span></span>
-  <span class="side">${t.need?`<span class="num"><b>${t.need}</b> ${({L:'крупн.',M:'средн.',S:'малых'})[t.typ]}</span>`:pill('закрыто','s-ok')}<span class="small mut num">осталось ${fmt(t.rem)} ч</span></span></div>`).join('')}</div>
+  <p class="small mut">Каждый тип: сколько часов в плане, сколько уже закрыто договорами, сколько в переговорах и сколько ещё найти. Одна точка даёт до 50 / 100 / 1 000 ч по размеру.</p>
+  <div class="list">${c.ts.map(t=>{const free=Math.max(0,t.rem-t.neg),per=LIM[t.typ],nm=({L:'крупн.',M:'средн.',S:'малых'})[t.typ];
+    const badge=t.rem<=0?pill('План закрыт','s-ok'):free<=0?pill('Хватает переговоров','s-warn'):`<span class="num need1"><b>${t.need}</b> ${nm}</span>`;
+    return `<div class="item trow" style="cursor:default"><span class="tmain"><span class="t">${esc(t.ru)}</span><span class="meta"><span class="num">${t.id}</span><span>${esc(t.en)}</span>${t.out>=.5?'<span class="tag out">улица</span>':''}</span>
+    <span class="tbar"><i style="width:${pct(t.closed,t.plan)}%;background:var(--ok)"></i><i style="width:${pct(t.neg,t.plan)}%;background:var(--warn)"></i></span>
+    <span class="tnums num"><span>План ${fmt(t.plan)} ч</span><span class="g">Договорились ${fmt(t.closed)} ч</span><span class="o">В переговорах ${fmt(t.neg)} ч</span><span class="w">Найти ещё ${fmt(free)} ч</span></span>
+    ${free>0?`<span class="small mut">1 точка — до ${fmt(per)} ч</span>`:''}</span>
+    <span class="side">${badge}</span></div>`}).join('')}</div>
   <div class="footer"><button class="btn" data-newcat="${c.id}">+ Локация в эту категорию</button></div>`);
   document.querySelectorAll('#layer [data-newcat]').forEach(b=>b.onclick=()=>openLoc({_cat:b.dataset.newcat}));
 }
@@ -648,10 +699,11 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLayer()});
 /* ---------- render ---------- */
 function render(){
   const C=compute();
-  document.querySelectorAll('#nav button').forEach(b=>b.setAttribute('aria-current',b.dataset.tab===tab));
-  const late=db.visits.filter(v=>!v.result&&v.date<today).length;const lc=$('#lateCnt');lc.hidden=!late;lc.textContent=late;const bc=badCount(C),be=$('#badCnt');be.hidden=!bc;be.textContent=bc;
-  $('#app').innerHTML=({sum:vSum,locs:vLocs,visits:vVisits,rules:vRulesPage,log:vLog})[tab](C)+(LIVE?'':`<p class="proto">Демо-режим: ключи Supabase не указаны, данные хранятся только в этом браузере.</p>`);
+  document.querySelectorAll('#nav button,#tabbar button').forEach(b=>b.setAttribute('aria-current',b.dataset.tab===tab));
+  const late=db.visits.filter(v=>!v.result&&v.date<today).length;const lc=$('#lateCnt');lc.hidden=!late;lc.textContent=late;const l2=$('#lateCnt2');l2.hidden=!late;l2.textContent=late;const bc=badCount(C),be=$('#badCnt');be.hidden=!bc;be.textContent=bc;const b2=$('#badCnt2');b2.hidden=!bc;b2.textContent=bc;
+  $('#app').innerHTML=({sum:vSum,locs:vLocs,visits:vVisits,rules:vRulesPage,log:vLog})[tab](C)+(LIVE?`<div class="whoami"><span>Вы вошли: <b>${esc(me)}</b></span><button class="btn ghost sm" id="logout2">Выйти</button></div>`:'')+(LIVE?'':`<p class="proto">Демо-режим: ключи Supabase не указаны, данные хранятся только в этом браузере.</p>`);
   bind();
+  const lo=$('#logout2');if(lo)lo.onclick=async()=>{await sb.auth.signOut();location.reload()};
 }
 function go(t){tab=t;try{history.replaceState(null,'','#'+t)}catch(e){}render();window.scrollTo(0,0)}
 function bind(){
@@ -666,7 +718,7 @@ function bind(){
   const q=$('#fq');if(q)q.oninput=e=>{f.q=e.target.value;const p=e.target.selectionStart;render();const n=$('#fq');n.focus();n.setSelectionRange(p,p)};
   document.querySelectorAll('[data-fc]').forEach(b=>b.onclick=()=>{f.cat=b.dataset.fc;render()});
 }
-document.querySelectorAll('#nav button').forEach(b=>b.onclick=()=>go(b.dataset.tab));
+document.querySelectorAll('#nav button,#tabbar button').forEach(b=>b.onclick=()=>go(b.dataset.tab));
 $('#addLoc').onclick=()=>openLoc({});
 $('#addVisit').onclick=()=>openVisit({});
 document.querySelectorAll('[data-lang]').forEach(b=>b.onclick=()=>setLang(b.dataset.lang));
@@ -675,7 +727,7 @@ if(!LIVE){const s=$('#me');s.innerHTML=WHO.map(w=>`<option ${w===me?'selected':'
 /* ---------- вход ---------- */
 let authEmail='';
 function vLogin(step,msg){
-  $('header nav').hidden=true;document.querySelector('.acts').hidden=true;$('#meBox').hidden=true;
+  $('header nav').hidden=true;$('#tabbar').hidden=true;document.querySelector('.acts').hidden=true;$('#meBox').hidden=true;
   $('#app').innerHTML=`<div class="login"><div class="eyebrow">EGOX · Локации 100k</div><h1>Вход</h1>
   <form id="af" class="form"><label>Почта<input id="a_email" type="email" required autocomplete="username" value="${esc(authEmail)}" placeholder="name@egox.tech"></label>
   <label>Пароль<input id="a_pass" type="password" required autocomplete="current-password"></label>
@@ -696,12 +748,18 @@ async function start(){
   if(!ok){await sb.auth.signOut();return vLogin('email','Почты '+(session.user.email||'')+' нет в команде. Попроси Амаля добавить её.')}
   const{data:mem}=await sb.from('team_members').select('name').ilike('email',session.user.email).maybeSingle();
   me=mem?.name||session.user.email;
-  $('header nav').hidden=false;document.querySelector('.acts').hidden=false;$('#meBox').hidden=true;$('#meLive').hidden=false;$('#meName').textContent=me;
+  $('header nav').hidden=false;$('#tabbar').hidden=false;document.querySelector('.acts').hidden=false;$('#meBox').hidden=true;$('#meLive').hidden=false;$('#meName').textContent=me;
   $('#app').innerHTML='<p class="mut">Загружаю данные…</p>';
   try{await reload()}catch(e){return}
   render();subscribe();
 }
 $('#logout').onclick=async()=>{await sb.auth.signOut();location.reload()};
+/* ---------- приложение на рабочий стол ---------- */
+if('serviceWorker' in navigator&&location.protocol==='https:')navigator.serviceWorker.register('sw.js').catch(()=>{});
+let installEvt=null;
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();installEvt=e;const b=$('#installBtn');if(b)b.hidden=false});
+window.addEventListener('appinstalled',()=>{const b=$('#installBtn');if(b)b.hidden=true;toast('Приложение установлено')});
+$('#installBtn').onclick=async()=>{if(!installEvt)return;installEvt.prompt();await installEvt.userChoice;installEvt=null;$('#installBtn').hidden=true};
 setLang(LANG);
 start();
 </script>
